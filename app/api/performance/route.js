@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { normalizeUserUrl, resolvePublicAddresses, UrlValidationError } from '@/lib/url-validation';
 import { runPerformanceAudit, PerformanceError } from '@/lib/performance';
 
@@ -72,8 +73,9 @@ export async function POST(request) {
   if (missing.length) {
     if (limited(ip, missing.length)) return fail(429, 'rate_limited', 'Too many performance tests. Please wait a minute and try again.');
 
+    const { env } = await getCloudflareContext({ async: true });
     const settled = await Promise.allSettled(
-      missing.map((strategy) => runPerformanceAudit(url.href, strategy, { apiKey: process.env.GOOGLE_API_KEY })),
+      missing.map((strategy) => runPerformanceAudit(url.href, strategy, { apiKey: env.GOOGLE_API_KEY })),
     );
     settled.forEach((out, i) => {
       const strategy = missing[i];

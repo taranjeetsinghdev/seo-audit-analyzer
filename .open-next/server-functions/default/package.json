@@ -1,0 +1,31 @@
+{
+  "name": "seo-audit-analyzer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SEO analysis and website audit platform built on Next.js App Router",
+  "scripts": {
+    "dev": "next dev --turbopack -p 5007",
+    "prebuild": "node scripts/clean.mjs",
+    "build": "next build",
+    "start": "next start -p 5007",
+    "test": "node --test",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "start:deploy": "node deploy/server.js"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0",
+    "next": "15.5.28",
+    "pdf-lib": "^1.17.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.15",
+    "@tailwindcss/postcss": "4.1.18",
+    "postcss": "^8.5.0",
+    "tailwindcss": "4.1.18",
+    "wrangler": "^4.156.0"
+  }
+}

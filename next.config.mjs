@@ -1,10 +1,10 @@
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare';
+
+initOpenNextCloudflareForDev();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: process.env.NEXT_DIST_DIR || '.next',
-  // Self-contained server build: deploy .next/standalone (+ .next/static and public) and run `node server.js`.
-  output: 'standalone',
   reactStrictMode: true,
-  serverExternalPackages: ['playwright-core'],
   poweredByHeader: false,
   compress: true,
   async headers() {

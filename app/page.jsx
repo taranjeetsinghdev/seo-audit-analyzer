@@ -20,14 +20,14 @@ const FEATURES = [
   ['Fixes ranked by impact', 'Issues are ordered by impact × confidence so you know what to change first.'],
   ['Honest coverage', 'Checks that do not apply or were not measured are labelled, never faked or silently scored.'],
   ['Twenty-three focused pages', 'On-page, indexing, social, content, accessibility, rendering, performance, links, sitemap, security, keywords and traffic.'],
-  ['Live rendering check', 'Compares the raw HTML with the JavaScript-rendered page, like a search engine would.'],
+  ['Server HTML analysis', 'Fetches each page and parses its returned HTML with Cheerio; JavaScript execution is not available on Workers.'],
   ['Download everything', 'Full report as HTML, PDF, Markdown, CSV or JSON — ready to share with a client or ticket.'],
   ['Safe by design', 'Strict network safeguards block private addresses, unsafe redirects and oversized responses.'],
 ];
 
 const FAQ = [
   ['Is the score a Google ranking score?', 'No. It is a custom audit score from a published rubric (version 2026.3). It shows how a page performs against those checks and does not predict or guarantee rankings.'],
-  ['Does it check JavaScript-rendered content?', 'Yes. The page is rendered in a real browser and compared with the raw server HTML, so you can see what depends on JavaScript.'],
+  ['Does it check JavaScript-rendered content?', 'No. The Cloudflare Workers deployment analyzes server-returned HTML and does not execute page JavaScript.'],
   ['Are results live or cached?', 'Live. Every analysis fetches the page at that moment, and the report shows the exact time it was generated.'],
   ['Do I need an account?', 'No. There are no accounts. Your current report lives in your browser tab and is cleared when you close it.'],
   ['Does it measure performance?', 'Yes. A Lighthouse lab test and real-user Core Web Vitals from Google\'s free APIs run automatically after the audit and feed the overall score. Backlink counts need a paid index and are not included.'],

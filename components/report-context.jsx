@@ -15,7 +15,6 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 const Ctx = createContext(null);
 const KEY = 'seo-audit-analyzer:report';
 const PERF_KEY = 'seo-audit-analyzer:performance';
-const RENDER_KEY = 'seo-audit-analyzer:live-render';
 const COUNTRY_KEY = 'seo-audit-analyzer:country';
 const LINK_KEY = 'seo-audit-analyzer:link-check';
 const SITE_KEY = 'seo-audit-analyzer:site-crawl';
@@ -39,8 +38,6 @@ export function ReportProvider({ children }) {
   const countryRef = useRef('');
   const reportRef = useRef(null);
   const [analyzing, setAnalyzing] = useState(null);
-  const [liveRender, setLiveRenderState] = useState(true);
-  const renderRef = useRef(true);
   const [popularity, setPopularity] = useState(NO_POP);
   const [popHistory, setPopHistory] = useState(NO_HIST);
   const histToken = useRef(0);
@@ -76,11 +73,6 @@ export function ReportProvider({ children }) {
         setCountryState(savedCountry);
         countryRef.current = savedCountry;
       }
-      const savedRender = localStorage.getItem(RENDER_KEY);
-      if (savedRender === 'off') {
-        setLiveRenderState(false);
-        renderRef.current = false;
-      }
       const savedHist = sessionStorage.getItem(HIST_KEY);
       if (saved && savedHist) { const h = JSON.parse(savedHist); setPopHistory({ ...NO_HIST, status: 'done', months: h.months, history: h }); }
       const savedSec = sessionStorage.getItem(SEC_KEY);
@@ -100,7 +92,7 @@ export function ReportProvider({ children }) {
   }, []);
 
   const analyze = useCallback(async (target) => {
-    setAnalyzing({ url: target, country: countryRef.current, render: renderRef.current, startedAt: Date.now() });
+    setAnalyzing({ url: target, country: countryRef.current, startedAt: Date.now() });
     setStatus('loading');
     setError('');
     setProgress([]);
@@ -108,7 +100,7 @@ export function ReportProvider({ children }) {
       const res = await fetch('/api/seo-analyze?stream=1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: target, render: renderRef.current, country: countryRef.current || undefined }),
+        body: JSON.stringify({ url: target, country: countryRef.current || undefined }),
         cache: 'no-store',
       });
       if (!res.ok || !res.body) {
@@ -411,16 +403,6 @@ export function ReportProvider({ children }) {
     }
   }, [analyze]);
 
-  const setLiveRender = useCallback((on) => {
-    renderRef.current = on;
-    setLiveRenderState(on);
-    try {
-      localStorage.setItem(RENDER_KEY, on ? 'on' : 'off');
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
   // One run tests mobile and desktop together; switching devices afterwards needs no new test.
   const runPerformance = useCallback(async (target) => {
     const id = (perfToken.current += 1);
@@ -523,8 +505,8 @@ export function ReportProvider({ children }) {
   }, [report, perf.results, linkCheck, siteCrawl, popularity, popHistory, security]);
 
   const value = useMemo(
-    () => ({ report, exportReport, status, error, progress, hydrated, analyze, analyzing, country, setCountry, perf, runPerformance, liveRender, setLiveRender, linkCheck, runLinkCheck, siteCrawl, runSiteCrawl, popularity, runPopularity, popHistory, runPopHistory, security, runSecurity }),
-    [report, exportReport, status, error, progress, hydrated, analyze, analyzing, country, setCountry, perf, runPerformance, liveRender, setLiveRender, linkCheck, runLinkCheck, siteCrawl, runSiteCrawl, popularity, runPopularity, popHistory, runPopHistory, security, runSecurity],
+    () => ({ report, exportReport, status, error, progress, hydrated, analyze, analyzing, country, setCountry, perf, runPerformance, linkCheck, runLinkCheck, siteCrawl, runSiteCrawl, popularity, runPopularity, popHistory, runPopHistory, security, runSecurity }),
+    [report, exportReport, status, error, progress, hydrated, analyze, analyzing, country, setCountry, perf, runPerformance, linkCheck, runLinkCheck, siteCrawl, runSiteCrawl, popularity, runPopularity, popHistory, runPopHistory, security, runSecurity],
   );
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

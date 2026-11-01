@@ -82,7 +82,6 @@ export function ModuleExplorer({ modules }) {
 
 const PARTS = [
   { key: 'html', label: 'HTML checks', points: 102, color: 'bg-accent', text: 'text-accent', body: 'Titles, descriptions, headings, content quality, accessibility, canonical, URLs, links, images, social cards, structured data and technical signals, read from the HTML. Each check is graded strictly: thin content, generic link text or missing image sizes all lose points.' },
-  { key: 'js', label: 'JavaScript rendering', points: 20, color: 'bg-accent-2', text: 'text-accent-2', body: 'Compares the server HTML with the live, rendered page: is metadata, content and are links present without JavaScript?' },
   { key: 'perf', label: 'Performance', points: 25, color: 'bg-good', text: 'text-good', body: 'Lighthouse lab score and Core Web Vitals, averaged across mobile and desktop. Added once the test finishes.' },
   { key: 'links', label: 'Link health', points: 10, color: 'bg-warn', text: 'text-warn', body: 'Share of checked links that respond correctly. Broken links reduce it.' },
   { key: 'site', label: 'Site health', points: 10, color: 'bg-bad', text: 'text-bad', body: 'Site-wide issues found by the crawl: duplicate titles, missing descriptions and thin pages.' },
@@ -91,11 +90,11 @@ const PARTS = [
 ];
 
 export function ScoreExplorer() {
-  const [on, setOn] = useState({ html: true, js: true, perf: true, links: true, site: true, security: true, sitemap: true });
+  const [on, setOn] = useState({ html: true, perf: true, links: true, site: true, security: true, sitemap: true });
   const [focus, setFocus] = useState('html');
   const total = PARTS.filter((p) => on[p.key]).reduce((a, p) => a + p.points, 0);
   const f = PARTS.find((p) => p.key === focus);
-  const optional = PARTS.slice(2);
+  const optional = PARTS.slice(1);
 
   return (
     <div className="card p-6 sm:p-8" data-reveal>

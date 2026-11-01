@@ -1,16 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import AnalyzeForm from './analyze-form';
 import CountrySelect from './country-select';
 import { COUNTRY_FILTER } from '@/lib/features';
 import { useReport } from './report-context';
 
-const SAMPLES = ['example.com', 'developer.mozilla.org', 'nextjs.org'];
-
 export default function HomeHero() {
-  const { status, error, analyze, report, progress, liveRender, setLiveRender } = useReport();
-  const router = useRouter();
+  const { status, error, report, progress } = useReport();
 
   return (
     <div className="flex flex-col items-center">
@@ -21,16 +17,9 @@ export default function HomeHero() {
             View as a visitor from <CountrySelect align="left" />
           </div>
         )}
-      <label className="flex cursor-pointer items-center gap-3 text-sm text-muted">
-        <button type="button" role="switch" aria-checked={liveRender} onClick={() => setLiveRender(!liveRender)}
-          className={`relative h-6 w-11 shrink-0 rounded-full border transition ${liveRender ? 'border-accent bg-accent' : 'border-line bg-panel-2'}`}>
-          <span className={`absolute top-0.5 h-4.5 w-4.5 rounded-full bg-white shadow transition-all ${liveRender ? 'left-[1.375rem]' : 'left-0.5'}`} style={{ height: '1.125rem', width: '1.125rem' }} />
-        </button>
-        <span>
-          <b className="text-ink">Live rendering</b> — analyze the page after JavaScript runs{' '}
-          <span className="hidden sm:inline">(slower, most accurate)</span>
-        </span>
-      </label>
+        <p className="text-sm text-muted">
+          Audits analyze server-returned HTML. JavaScript-rendered content is unavailable in this Workers deployment.
+        </p>
       </div>
       <p className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm text-muted">
         {/* Try */}

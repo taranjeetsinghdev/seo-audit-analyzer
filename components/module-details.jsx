@@ -407,12 +407,12 @@ const Rendering = ({ r }) => {
       <Block title="What was analysed">
         {rd?.used ? (
           <p>
-            The whole report is built from the <b>live, JavaScript-rendered page</b> (headless Chromium, {(rd.ms / 1000).toFixed(1)} s).
+            The whole report is built from the <b>live, JavaScript-rendered page</b> ({(rd.ms / 1000).toFixed(1)} s).
             {rd.rawAvailable ? ' The raw server HTML was fetched too and is compared below.' : ' The raw server HTML could not be fetched, so no comparison is available.'}
           </p>
         ) : (
           <p className="text-muted">
-            Server HTML only. {rd?.reason || 'Live rendering was not used.'} Turn on “Live rendering” on the home page and re-run to compare.
+            Server HTML only. {rd?.reason || 'Live rendering was not used.'}
           </p>
         )}
       </Block>

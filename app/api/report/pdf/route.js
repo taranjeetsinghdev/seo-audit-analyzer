@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { toHtml, filenameBase } from '@/lib/report-export';
-import { htmlToPdf, renderAvailable } from '@/lib/browser-fetcher';
+import { filenameBase } from '@/lib/report-export';
+import { generateReportPdf } from '@/lib/pdf-generator';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -26,8 +26,6 @@ export async function POST(request) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'local';
   if (limited(ip)) return fail(429, 'rate_limited', 'Too many PDF requests. Please wait a minute.');
   if (Number(request.headers.get('content-length') || 0) > MAX_BYTES) return fail(413, 'too_large', 'Report is too large.');
-  if (!renderAvailable()) return fail(503, 'no_browser', 'PDF generation needs Chrome on the server.');
-
   let report;
   try {
     ({ report } = await request.json());
@@ -39,7 +37,7 @@ export async function POST(request) {
   }
 
   try {
-    const pdf = await htmlToPdf(toHtml(report), { footer: `SEO Audit Analyzer · ${report.url.slice(0, 90).replace(/[<>&]/g, '')}` });
+    const pdf = await generateReportPdf(report);
     return new Response(pdf, {
       headers: {
         'Content-Type': 'application/pdf',
