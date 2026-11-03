@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "next dev --turbopack -p 5007",
     "prebuild": "node scripts/clean.mjs",
+    "clean:cloudflare": "node scripts/clean.mjs --open-next",
+    "prepreview": "npm run clean:cloudflare",
+    "predeploy": "npm run clean:cloudflare",
     "build": "next build",
     "start": "next start -p 5007",
     "test": "node --test",

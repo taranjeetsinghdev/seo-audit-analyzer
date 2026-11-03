@@ -1,5 +1,7 @@
 node_modules
 .next*
+.open-next/
+.wrangler/
 out
 .env*.local
 .DS_Store
