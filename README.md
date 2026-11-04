@@ -72,7 +72,6 @@ keyword/rank tracking. The report always states what was not measured.
 ## Production notes
 
 - Deploy with `npm run deploy`; `npm run preview` builds and runs a local Worker preview.
-- For Cloudflare Workers Builds, set the build command to `npm run clean:cloudflare` and the deploy command to `npx wrangler deploy`. The adapter builds the app during deployment; cleaning first prevents a locally generated `.open-next` bundle from being reused on Cloudflare.
 - Rate limiting and short-lived caches are in-memory per Worker isolate and are not durable across requests or deployments.
 - No KV, D1, or Browser Rendering binding is required. The asset binding is configured by Wrangler.
 - Add network-level egress restrictions where available; in-app SSRF validation is defence in depth.
