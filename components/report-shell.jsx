@@ -57,12 +57,12 @@ export default function ReportShell({ children }) {
   return (
     <div className="min-h-dvh">
       <header className="report-header no-print sticky top-0 z-30 border-b border-line/70 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1600px] flex-wrap items-center gap-x-5 gap-y-2 px-5 py-3">
+        <div className="report-header-inner mx-auto flex max-w-[1600px] flex-wrap items-center gap-x-5 gap-y-2 px-5 py-3">
           <Logo />
           <div className="order-last w-full sm:order-none sm:w-auto sm:max-w-lg sm:flex-1">
             <AnalyzeForm initial={status === 'loading' && analyzing ? analyzing.url : report ? report.requestedUrl : ''} key={status === 'loading' ? `run-${analyzing?.startedAt}` : report?.generatedAt || 'empty'} />
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="report-header-actions ml-auto flex items-center gap-2">
             <CountrySelect compact />
             {shown && <DownloadMenu report={shown} />}
             <ThemeToggle />
@@ -94,7 +94,7 @@ export default function ReportShell({ children }) {
             <SidebarNav items={items} pathname={pathname} groups={[...SECTIONS, 'Site & market', 'Report']} />
           </aside>
 
-          <nav aria-label="Report modules" className="no-print -mx-5 mb-4 flex gap-1.5 overflow-x-auto px-5 pb-1 lg:hidden">
+          <nav aria-label="Report modules" className="report-mobile-nav no-print -mx-5 mb-4 flex gap-1.5 overflow-x-auto px-5 pb-1 lg:hidden">
             {items.map((i) => (
               <Link key={i.href} href={i.href} aria-current={pathname === i.href ? 'page' : undefined}
                 className={`flex shrink-0 items-center gap-2 rounded-md border px-3 py-1.5 text-sm ${

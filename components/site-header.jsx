@@ -15,7 +15,7 @@ export default function SiteHeader() {
     <header className="site-header no-print sticky top-0 z-30 border-b border-line/70 bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4">
         <Logo />
-        <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 text-sm sm:flex">
+        <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 text-sm md:flex">
           {NAV.map(([href, label]) => (
             <Link key={href} href={href} className="site-nav-link rounded-md px-3 py-1.5 text-muted transition hover:bg-panel-2 hover:text-ink">{label}</Link>
           ))}
@@ -23,10 +23,10 @@ export default function SiteHeader() {
         <div className="flex items-center gap-2">
           <CountrySelect compact />
           <ThemeToggle />
-          <Link href="/#url-hero" className="header-cta hidden sm:inline-flex">Run an audit <span aria-hidden>↗</span></Link>
+          <Link href="/#url-hero" className="header-cta hidden md:inline-flex">Run an audit <span aria-hidden>↗</span></Link>
         </div>
       </div>
-      <nav aria-label="Primary" className="no-scrollbar flex gap-1 overflow-x-auto border-t border-line/70 px-4 py-2 sm:hidden">
+      <nav aria-label="Primary" className="no-scrollbar flex gap-1 overflow-x-auto border-t border-line/70 px-4 py-2 md:hidden">
         {NAV.map(([href, label]) => (
           <Link key={href} href={href} className="shrink-0 rounded-md px-3 py-1.5 text-sm text-muted transition hover:bg-panel-2 hover:text-ink">{label}</Link>
         ))}

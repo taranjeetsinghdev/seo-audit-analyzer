@@ -978,7 +978,9 @@ h1, h2, h3, .display { letter-spacing: -0.045em; }
 }
 @media (max-width: 700px) {
   .home-hero {
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
+    min-height: 0;
     margin-top: 0.75rem;
     padding: 2.25rem 1.35rem 2rem;
   }
@@ -1276,4 +1278,90 @@ h1, h2, h3, .display { letter-spacing: -0.045em; }
   .score-brief-detail { padding: 1.1rem; }
   .score-brief-count { flex-direction: column; align-items: end; gap: 0; font-size: 1.05rem; }
   .audit-stat-grid dd { font-size: 1.65rem; }
+}
+
+/* ---------- small-screen layout refinements ---------- */
+.report-mobile-nav {
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+.report-mobile-nav > a {
+  min-height: 2.5rem;
+  border-radius: 2px;
+  background: var(--surface);
+}
+.report-mobile-nav > a[aria-current="page"] {
+  border-color: var(--accent);
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+}
+
+@media (max-width: 767px) {
+  .report-header-inner { column-gap: 0.6rem; padding-inline: 0.75rem; }
+  .report-header-inner > a { flex: 0 0 auto; }
+  .report-header-actions { gap: 0.4rem; }
+  .report-header-inner > div.order-last { margin-top: 0.2rem; }
+  .report-header-inner > div.order-last form { min-width: 0; }
+  .report-header-inner > div.order-last input { font-size: 0.82rem; }
+  .report-header-inner > div.order-last button { padding-inline: 0.7rem; }
+  .report-workspace { padding: 1rem 0.75rem 2rem; }
+  .report-mobile-nav { margin-inline: -0.75rem; padding-inline: 0.75rem; }
+  .overview-masthead { padding: 1.1rem; }
+  .overview-masthead-main { margin-top: 1.2rem; }
+  .overview-meta { margin-top: 1.1rem; }
+  .score-brief-score { padding-block: 1.25rem; }
+  .score-brief-detail { padding: 1.15rem; }
+  .score-brief-sections { gap: 0.4rem; margin-top: 0.8rem; }
+  .score-brief-section { min-height: 3.65rem; padding: 0.55rem; }
+  .score-brief-section > div:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.4rem;
+  }
+  .score-brief-section > div:first-child > span:first-child { overflow-wrap: anywhere; }
+  .score-brief-section > div:first-child > span:last-child { white-space: nowrap; }
+  .score-brief-heading { align-items: start; }
+  .score-brief-heading h2 { font-size: 1.35rem; }
+  .check-results { padding: 0.85rem; }
+  .audit-stat-grid > div { min-width: 0; padding: 0.65rem; }
+  .audit-stat-grid dt { gap: 0.35rem; font-size: 0.6rem; }
+  .audit-stat-grid dd { margin-top: 0.3rem; }
+  .overview-section { margin-top: 2.25rem; }
+  .overview-section-heading { gap: 0.55rem; }
+}
+
+@media (max-width: 420px) {
+  .brand-lockup { gap: 0.45rem; }
+  .brand-mark { width: 1.9rem; height: 1.9rem; }
+  .brand-kicker { display: none; }
+  .brand-name { margin-top: 0; font-size: 0.96rem; }
+  .report-header-inner { padding-block: 0.55rem; }
+  .report-header-actions { margin-left: auto; }
+  .report-header-actions > * { flex: 0 0 auto; }
+  .report-header-actions > div > button { padding: 0.45rem; }
+  .report-header-actions .btn { min-height: 2.35rem; padding: 0.45rem 0.55rem; }
+  .report-header-inner > div.order-last { flex-basis: 100%; }
+  .report-header-inner > div.order-last form { width: 100%; }
+  .report-header-inner > div.order-last form > svg { margin-left: 0.35rem; }
+  .report-header-inner > div.order-last input { padding-inline: 0.2rem; }
+  .overview-masthead-top { gap: 0.4rem; }
+  .overview-kicker { font-size: 0.59rem; letter-spacing: 0.09em; }
+  .overview-index { white-space: nowrap; }
+  .overview-actions { gap: 0.45rem; }
+  .overview-rerun { padding: 0.55rem; }
+  .overview-meta { gap: 0.5rem 0.7rem; font-size: 0.66rem; }
+  .overview-meta > span { min-width: 0; }
+  .score-brief-heading { gap: 0.5rem; }
+  .score-brief-count small { font-size: 0.6rem; }
+}
+
+@media (max-width: 360px) {
+  .report-header-actions { gap: 0.25rem; }
+  .report-header-actions .btn { padding-inline: 0.4rem; }
+  .report-header-actions > div > button { gap: 0.25rem; padding-inline: 0.35rem; }
+  .overview-meta > span:nth-child(4) { overflow-wrap: anywhere; }
+  .audit-stat-grid dt { font-size: 0.55rem; }
 }
