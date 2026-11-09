@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useReport } from './report-context';
-import { PageHead } from './module-page';
 import SeoScoreCard from './seo-score-card';
 import CountUp from './count-up';
 import { IssueList } from './recommendations-panel';
@@ -25,28 +24,37 @@ export default function OverviewPage() {
   ];
 
   return (
-    <article>
-      <PageHead eyebrow="Audit overview" title={host}>
-        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="report-summary-label"><span className="h-1.5 w-1.5 rounded-full bg-good" /> Live audit</span>
-          <span className="text-sm text-muted">HTTP {report.statusCode} <span aria-hidden>·</span> {(report.fetch.bytes / 1024).toFixed(0)} KB <span aria-hidden>·</span> {report.fetch.ms} ms</span>
+    <article className="audit-overview">
+      <header className="overview-masthead rise">
+        <div className="overview-masthead-top">
+          <p className="overview-kicker"><span /> SITE AUDIT / OVERVIEW</p>
+          <span className="overview-index">REPORT 01 — LIVE</span>
         </div>
-        <p className="mt-2 break-all text-sm text-muted">
-          <a href={report.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-accent">{report.url}</a>
-        </p>
-        <p className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted">
-          <span>Fetched live {new Date(report.generatedAt).toLocaleString()}</span>
-          {report.country && <span className="rounded-full border border-line bg-panel-2 px-2.5 py-0.5 text-xs">Viewpoint: {flagOf(report.country.code)} {report.country.name}</span>}
-          <button type="button" disabled={status === 'loading'} onClick={() => analyze(report.requestedUrl)} className="btn btn-ghost no-print px-3 py-1.5 text-xs">
-            {status === 'loading' ? 'Re-running…' : '↻ Re-run now'}
-          </button>
-        </p>
-      </PageHead>
+        <div className="overview-masthead-main">
+          <div className="min-w-0">
+            <h1 className="overview-domain">{host}</h1>
+            <a href={report.url} target="_blank" rel="noopener noreferrer" className="overview-url">{report.url} <span aria-hidden>↗</span></a>
+          </div>
+          <div className="overview-actions">
+            <span className="overview-live"><i /> Audit complete</span>
+            <button type="button" disabled={status === 'loading'} onClick={() => analyze(report.requestedUrl)} className="overview-rerun no-print">
+              {status === 'loading' ? 'Re-running…' : 'Run again ↻'}
+            </button>
+          </div>
+        </div>
+        <div className="overview-meta">
+          <span><b>HTTP</b> {report.statusCode}</span>
+          <span><b>TRANSFER</b> {(report.fetch.bytes / 1024).toFixed(0)} KB</span>
+          <span><b>FETCH</b> {report.fetch.ms} ms</span>
+          <span><b>GENERATED</b> {new Date(report.generatedAt).toLocaleString()}</span>
+          {report.country && <span><b>VIEWPOINT</b> {flagOf(report.country.code)} {report.country.name}</span>}
+        </div>
+      </header>
 
       {report.notices?.length > 0 && (
         <ul className="rise mt-5 space-y-2">
           {report.notices.map((n, i) => (
-            <li key={i} className={`rounded-xl border px-4 py-3 text-sm ${n.level === 'warning' ? 'border-warn/40 bg-warn/10' : 'border-accent/30 bg-accent/5'}`}>{n.message}</li>
+            <li key={i} className={`overview-notice rounded-xl border px-4 py-3 text-sm ${n.level === 'warning' ? 'border-warn/40 bg-warn/10' : 'border-accent/30 bg-accent/5'}`}>{n.message}</li>
           ))}
         </ul>
       )}
@@ -72,7 +80,7 @@ export default function OverviewPage() {
         const total = stats.reduce((a, x) => a + x[1], 0) || 1;
         const SEG = ['bg-good', 'bg-warn', 'bg-bad', 'bg-line'];
         return (
-          <div className="card rise mt-4 p-4">
+          <div className="card rise check-results mt-4 p-4">
             <div className="flex items-center justify-between text-sm">
               <span className="font-semibold">Check results</span>
               <span className="text-muted">{total} checks</span>
@@ -86,7 +94,7 @@ export default function OverviewPage() {
         );
       })()}
 
-      <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <dl className="audit-stat-grid mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {stats.map(([k, v, cls, bg], i) => (
           <div key={k} className={`card stat-tile p-4 ${cls}`} style={{ '--d': `${i * 80}ms` }}>
             <dt className="flex items-center gap-2 text-sm text-muted">
@@ -97,15 +105,17 @@ export default function OverviewPage() {
         ))}
       </dl>
 
-      <section className="mt-12">
-        <h2 className="text-2xl">Modules</h2>
-        <p className="mt-1 text-sm text-muted">Open any module for its checks, evidence and detail.</p>
+      <section className="overview-section mt-12">
+        <div className="overview-section-heading">
+          <div><p className="overview-kicker">01 / COVERAGE</p><h2 className="text-2xl">Audit modules</h2></div>
+          <p className="text-sm text-muted">Open a module to inspect its findings and evidence.</p>
+        </div>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {MODULES.map((m, i) => {
             const st = STATUS_STYLE[moduleStatus(m, report.checks)];
             return (
               <li key={m.slug} className="tile-anim" style={{ '--d': `${i * 35}ms` }}>
-                <Link href={`/report/${m.slug}`} className={`card card-hover spot mod-card block h-full p-4 pl-5 ${st.text}`}>
+                <Link href={`/report/${m.slug}`} className={`card card-hover spot mod-card overview-module block h-full p-4 pl-5 ${st.text}`}>
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs text-muted">{String(i + 1).padStart(2, '0')}</span>
                     <span className={`inline-flex items-center gap-1.5 rounded-full bg-current/10 px-2 py-0.5 text-xs font-semibold ${st.text}`}>
@@ -121,9 +131,9 @@ export default function OverviewPage() {
         </ul>
       </section>
 
-      <section className="mt-12">
+      <section className="overview-section mt-12">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-2xl">Top fixes</h2>
+          <div><p className="overview-kicker">02 / PRIORITIES</p><h2 className="text-2xl">Next best actions</h2></div>
           <Link href="/report/recommendations" className="text-sm font-medium text-accent hover:underline">All {shown.issues.length} →</Link>
         </div>
         <div className="mt-4"><IssueList issues={shown.issues.slice(0, 4)} /></div>

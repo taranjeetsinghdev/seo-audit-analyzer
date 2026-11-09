@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { normalizeUserUrl, resolvePublicAddresses, UrlValidationError } from '@/lib/url-validation';
 import { runPerformanceAudit, PerformanceError } from '@/lib/performance';
+import { getGoogleApiKey } from '@/lib/google-api-key';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -74,8 +75,9 @@ export async function POST(request) {
     if (limited(ip, missing.length)) return fail(429, 'rate_limited', 'Too many performance tests. Please wait a minute and try again.');
 
     const { env } = await getCloudflareContext({ async: true });
+    const apiKey = getGoogleApiKey(env);
     const settled = await Promise.allSettled(
-      missing.map((strategy) => runPerformanceAudit(url.href, strategy, { apiKey: env.GOOGLE_API_KEY })),
+      missing.map((strategy) => runPerformanceAudit(url.href, strategy, { apiKey })),
     );
     settled.forEach((out, i) => {
       const strategy = missing[i];

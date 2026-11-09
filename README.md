@@ -54,7 +54,8 @@ generated directly with `pdf-lib`.
 ## Performance (free, on demand)
 
 `/report/performance` calls Google PageSpeed Insights (Lighthouse lab data + CrUX field data) and falls back to the
-Chrome UX Report API. Set `GOOGLE_API_KEY` as a Cloudflare secret with both APIs enabled — no billing account required.
+Chrome UX Report API. For local development, set `GOOGLE_API_KEY` in `.env`; for Cloudflare, configure it as a Worker
+secret. Both PageSpeed Insights and Chrome UX Report APIs must be enabled — no billing account required.
 Results are cached for 1 hour, rate-limited below Google's 30/min quota, and kept out of the 100-point HTML score.
 
 ## Site-wide issues and link checking (free)

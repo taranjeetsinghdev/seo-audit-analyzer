@@ -71,25 +71,25 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
-      <main className="mx-auto max-w-7xl px-5">
+      <main className="home-content mx-auto max-w-7xl px-5">
         <section className="relative pb-6 pt-0 text-left">
           <HeroBackdrop />
           <div className="home-hero">
             <div className="home-hero-copy">
               <p className="hero-in hero-badge">
-                <span className="live-dot h-2 w-2 rounded-full bg-good" /> Your website, under the microscope
+                <span className="live-dot h-2 w-2 rounded-full bg-good" /> INDEPENDENT SITE DIAGNOSTICS
               </p>
               <h1 className="hero-in mt-6 max-w-3xl text-5xl leading-[0.98] text-balance sm:text-7xl">
-                Make every page <span className="gradient-text">search-ready.</span>
+                Find the signal in <span className="gradient-text">your site.</span>
               </h1>
               <p className="hero-in mt-6 max-w-xl text-lg text-muted text-pretty">
-                A clear, evidence-first SEO audit that turns technical mysteries into your next best moves.
+                A live, evidence-led SEO audit. See what search engines see, then know exactly what to fix.
               </p>
               <div className="hero-in mt-8 max-w-2xl">
                 <HomeHero />
               </div>
               <p className="hero-in hero-proof mt-5">
-                <span aria-hidden>✓</span> Free, instant and no account needed
+                <span aria-hidden>✓</span> Free to use · No account · Evidence behind every score
                 <span className="hero-proof-divider" aria-hidden>·</span>
                 <a href="#modules">Explore 23 audit modules <span aria-hidden>↗</span></a>
               </p>
@@ -106,27 +106,27 @@ export default function Home() {
                 <div className="preview-content">
                   <div className="preview-heading">
                     <div>
-                      <p className="preview-kicker">AUDIT OVERVIEW</p>
+                      <p className="preview-kicker">SIGNAL / 001</p>
                       <p className="preview-domain">example.com</p>
                     </div>
-                    <span className="preview-period">JUST NOW</span>
+                    <span className="preview-period">SAMPLE READOUT</span>
                   </div>
                   <div className="preview-score-card">
                     <div className="preview-score-ring"><span>86</span><small>/100</small></div>
                     <div className="preview-score-copy">
-                      <strong>Looking good</strong>
-                      <span>A few wins are waiting for you.</span>
+                      <strong>Healthy foundation</strong>
+                      <span>36 of 42 signals in good shape.</span>
                       <div className="preview-score-track"><i /></div>
                     </div>
                   </div>
                   <div className="preview-checks">
-                    <div className="preview-check"><span className="preview-check-icon is-good">✓</span><span>Page titles</span><b>Great</b></div>
-                    <div className="preview-check"><span className="preview-check-icon is-good">✓</span><span>Page speed</span><b>Fast</b></div>
-                    <div className="preview-check"><span className="preview-check-icon is-warn">!</span><span>Image alt text</span><b>3 to fix</b></div>
+                    <div className="preview-check"><span className="preview-check-icon is-good">✓</span><span>Page titles</span><b>01 / PASS</b></div>
+                    <div className="preview-check"><span className="preview-check-icon is-good">✓</span><span>Structured data</span><b>02 / PASS</b></div>
+                    <div className="preview-check"><span className="preview-check-icon is-warn">!</span><span>Image alt text</span><b>03 / REVIEW</b></div>
                   </div>
                   <div className="preview-tip">
                     <span className="preview-tip-icon">✳</span>
-                    <span><b>Your next best move</b><small>Add descriptive alt text to 3 images</small></span>
+                    <span><b>Next action</b><small>Add useful descriptions to 3 images</small></span>
                     <span className="preview-tip-arrow">↗</span>
                   </div>
                 </div>

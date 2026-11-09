@@ -15,6 +15,10 @@ export const metadata = {
   title: { default: `${SITE.name} — ${SITE.tagline}`, template: `%s | ${SITE.name}` },
   description: SITE.description,
   applicationName: SITE.name,
+  icons: {
+    icon: [{ url: '/icon.svg?v=2', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-icon?v=2', type: 'image/png' }],
+  },
   keywords: ['SEO audit', 'SEO analyzer', 'on-page SEO', 'meta tags checker', 'structured data', 'Open Graph', 'technical SEO'],
   alternates: { canonical: '/' },
   openGraph: {
@@ -23,8 +27,14 @@ export const metadata = {
     title: `${SITE.name} — ${SITE.tagline}`,
     description: SITE.description,
     url: '/',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'SEO Audit Analyzer — evidence-led site diagnostics' }],
   },
-  twitter: { card: 'summary_large_image', title: `${SITE.name} — ${SITE.tagline}`, description: SITE.description },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+    images: ['/opengraph-image'],
+  },
   robots: { index: true, follow: true },
 };
 
@@ -32,8 +42,8 @@ export const viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f5f7f7' },
-    { media: '(prefers-color-scheme: dark)', color: '#111819' },
+    { media: '(prefers-color-scheme: light)', color: '#f1eee5' },
+    { media: '(prefers-color-scheme: dark)', color: '#111411' },
   ],
 };
 

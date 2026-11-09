@@ -33,9 +33,9 @@ export default function SeoScoreCard({ report }) {
   const loading = perf.status === 'loading';
 
   return (
-    <section className="card rise p-6 sm:p-8">
-      <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
-        <div className="mx-auto text-center">
+    <section className="score-brief card rise">
+      <div className="score-brief-layout grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
+        <div className="score-brief-score mx-auto text-center">
           <div className={`relative h-48 w-48 ${tone(score)}`}>
             <span aria-hidden className="absolute inset-3 rounded-full bg-current opacity-[0.07] blur-2xl" />
             <svg viewBox="0 0 128 128" className="h-full w-full -rotate-90" role="img" aria-label={`Overall score ${score ?? 'n/a'} out of 100`}>
@@ -59,17 +59,22 @@ export default function SeoScoreCard({ report }) {
           {hasPerf && <p className="mt-1 text-xs text-muted">HTML audit alone: <b className="text-ink">{report.htmlScore}</b></p>}
         </div>
 
-        <div>
-          <h2 className="text-2xl">Grade {grade} <span className="text-lg font-normal text-muted">· {gradeLabel}</span></h2>
+        <div className="score-brief-detail">
+          <div className="score-brief-heading">
+            <div>
+              <p className="overview-kicker">AUDIT HEALTH / {report.rubricVersion}</p>
+              <h2 className="text-2xl">Grade {grade} <span className="text-lg font-normal text-muted">· {gradeLabel}</span></h2>
+            </div>
+            <span className="score-brief-count">{coverage.evaluated}<small> / {coverage.total} checks</small></span>
+          </div>
           <p className="mt-1 text-sm text-muted">
-            Rubric {report.rubricVersion} · {coverage.evaluated} of {coverage.total} checks evaluated ·{' '}
-            {Math.round(scoring.pointsEarned * 10) / 10}/{scoring.pointsPossible} applicable points
+            {Math.round(scoring.pointsEarned * 10) / 10} of {scoring.pointsPossible} applicable points earned
           </p>
 
-          <ul className="mt-5 space-y-1">
+          <ul className="score-brief-sections mt-5">
             {report.sections.filter((s) => !EXTRA_SECTIONS.includes(s.name)).map((sec) => (
               <li key={sec.name}>
-                <Link href={`/report/${sec.slug}`} className="group -mx-3 block rounded-xl px-3 py-2 transition hover:bg-panel-2">
+                <Link href={`/report/${sec.slug}`} className="score-brief-section group block transition">
                   <div className="mb-1.5 flex items-baseline justify-between gap-3">
                     <span className="font-medium transition group-hover:text-accent">{sec.name}</span>
                     <span className="tabular-nums text-sm text-muted">
@@ -82,12 +87,12 @@ export default function SeoScoreCard({ report }) {
               </li>
             ))}
 
-            <li className="mt-2 border-t border-line pt-3">
+            <li className="score-brief-extras mt-2 border-t border-line pt-3">
               {['Security & infrastructure', 'Sitemap & robots'].map((name) => {
                 const x = report.sections.find((s) => s.name === name);
                 if (!x) return null;
                 return (
-                  <Link key={name} href={`/report/${x.slug}`} className="group -mx-3 mb-3 block rounded-xl px-3 py-2 transition hover:bg-panel-2">
+                  <Link key={name} href={`/report/${x.slug}`} className="score-brief-section group mb-3 block transition">
                     <div className="mb-1.5 flex items-baseline justify-between gap-3">
                       <span className="font-medium transition group-hover:text-accent">{name} <span className="text-xs font-normal text-muted">live check</span></span>
                       <span className="tabular-nums text-sm text-muted">
@@ -100,7 +105,7 @@ export default function SeoScoreCard({ report }) {
                 );
               })}
               {siteSection && (
-                <Link href="/report/site-crawl" className="group -mx-3 mb-3 block rounded-xl px-3 py-2 transition hover:bg-panel-2">
+                <Link href="/report/site-crawl" className="score-brief-section group mb-3 block transition">
                   <div className="mb-1.5 flex items-baseline justify-between gap-3">
                     <span className="font-medium transition group-hover:text-accent">Site health <span className="text-xs font-normal text-muted">crawl</span></span>
                     <span className="tabular-nums text-sm text-muted">
@@ -113,7 +118,7 @@ export default function SeoScoreCard({ report }) {
                 </Link>
               )}
               {linkSection ? (
-                <Link href="/report/broken-links" className="group -mx-3 mb-3 block rounded-xl px-3 py-2 transition hover:bg-panel-2">
+                <Link href="/report/broken-links" className="score-brief-section group mb-3 block transition">
                   <div className="mb-1.5 flex items-baseline justify-between gap-3">
                     <span className="font-medium transition group-hover:text-accent">Link health <span className="text-xs font-normal text-muted">live check</span></span>
                     <span className="tabular-nums text-sm text-muted">
@@ -136,7 +141,7 @@ export default function SeoScoreCard({ report }) {
                 </div>
               ) : null}
               {hasPerf && perfSection ? (
-                <Link href="/report/performance" className="group -mx-3 block rounded-xl px-3 py-2 transition hover:bg-panel-2">
+                <Link href="/report/performance" className="score-brief-section group block transition">
                   <div className="mb-1.5 flex items-baseline justify-between gap-3">
                     <span className="font-medium transition group-hover:text-accent">Performance <span className="text-xs font-normal text-muted">Lighthouse lab</span></span>
                     <span className="tabular-nums text-sm text-muted">
